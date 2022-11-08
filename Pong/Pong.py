@@ -1,5 +1,14 @@
+
 import turtle
 import time
+from pygame import mixer
+
+mixer.init()
+PaddleBounce = mixer.Sound("PongPaddleBounce.wav")
+WallBounce = mixer.Sound("PongWallBounce.wav")
+PongScore = mixer.Sound("PongScore.wav")
+Won = mixer.Sound("ArcadeWinning.wav")
+
 
 wn = turtle.Screen()
 wn.title("Pong Game")
@@ -97,6 +106,7 @@ def paddle_b_down():
         paddle_b.sety(y)
 
 
+
 #keyboard binding
 wn.listen()
 wn.onkeypress(paddle_a_up, "w")
@@ -106,7 +116,6 @@ wn.onkeypress(paddle_b_down, "Down")
 
 
 #main game
-
 while True:
     wn.update()
     
@@ -116,28 +125,34 @@ while True:
     
     # Border checking
     if ball.ycor() > 250:
+        mixer.Sound.play(WallBounce)
         ball.dy *= -1
     if ball.ycor() < -270:
+        mixer.Sound.play(WallBounce)
         ball.dy *= -1
         
     if ball.xcor() > 380:
+        mixer.Sound.play(PongScore)
         ball.goto(0,0)
         time.sleep(.1)
         ball.dx *= -1
         player_a += 1
         text_a.clear()
         text_a.write("Player A: {}".format(player_a), font=("Courier", 15), align="Left")
-        if (player_a == 10):
+        if (player_a == 2):
             won = turtle.Turtle()
             won.penup()
             won.color("White")
             won.speed(0)
             won.hideturtle()
             won.write("Player A WON!", font= ("Arial", 50), align = "Center")
-            time.sleep(3)
+            time.sleep(.25)
+            mixer.Sound.play(Won)
+            time.sleep(2.5)
             break
         
     if ball.xcor() < -380:
+        mixer.Sound.play(PongScore)
         ball.goto(0,0)
         time.sleep(.3)
         ball.dx *= -1
@@ -150,19 +165,20 @@ while True:
             won.color("White")
             won.speed(0)
             won.hideturtle()
+            time.sleep(.25)
             won.write("Player B WON!", font= ("Arial", 50), align = "Center")
-            time.sleep(3)
+            mixer.Sound.play(Won)
+            time.sleep(2.5)
             break
         
     
-
-    
     # Paddle and ball collisions
     if ball.xcor() < -340 and (ball.ycor() > paddle_a.ycor() -50 and ball.ycor() < paddle_a.ycor() + 50):
+        mixer.Sound.play(PaddleBounce)
         ball.setx(-340)
         ball.dx *= -1
         
     if ball.xcor() > 340 and (ball.ycor() > paddle_b.ycor() - 50 and ball.ycor() < paddle_b.ycor() + 50):
+        mixer.Sound.play(PaddleBounce)
         ball.setx(340)
         ball.dx *= -1
-        
