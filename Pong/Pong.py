@@ -2,14 +2,19 @@
 import turtle
 import time
 from pygame import mixer
+import os, sys
 
+APP_FOLDER = os.path.dirname(os.path.realpath(sys.argv[0]))
+full_path = os.path.join(APP_FOLDER, "PongPaddleBounce.wav")
+full_path = (r'{}'.format(full_path))
+print (full_path)
 mixer.init()
-PaddleBounce = mixer.Sound("PongPaddleBounce.wav")
-WallBounce = mixer.Sound("PongWallBounce.wav")
+PaddleBounce = mixer.Sound(r'{}'.format(full_path))
+WallBounce = mixer.Sound(str.encode(os.path.join(APP_FOLDER, "PongWallBounce.wav")))
 PongScore = mixer.Sound("PongScore.wav")
 Won = mixer.Sound("ArcadeWinning.wav")
 
-
+#asas
 wn = turtle.Screen()
 wn.title("Pong Game")
 wn.bgcolor("black")
