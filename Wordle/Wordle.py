@@ -51,6 +51,9 @@ def compare(userInput, Chosen):
 inputs = []
 counter = 0
 
+print("Five Letter Wordle!")
+
+
 while counter < 6:
     userInput = input()
     userInput = str.lower(userInput)
@@ -65,10 +68,14 @@ while counter < 6:
             if compare(userInput, Chosen) == ['Correct', 'Correct', 'Correct', 'Correct','Correct']:
                 print (f"congratulations '{userInput}' is correct")
                 break
+                
+            if counter == 6:
+                print (f"The word was '{temp}'")
         else:
             print (f"you already tried {userInput}")
     else:
         print(f"{userInput} is not in our words list")
+    
     
 
 # %%
